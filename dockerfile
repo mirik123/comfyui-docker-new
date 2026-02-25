@@ -66,6 +66,7 @@ COPY ./workers/ ./workers/
 COPY ./utils/ ./utils/
 COPY ./templates/ ./templates/
 COPY models_config.json /workspace
+COPY external_models.json /workspace
 RUN chmod +x *.sh
 
 EXPOSE 8188 8888 8189

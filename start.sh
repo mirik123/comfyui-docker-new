@@ -305,6 +305,8 @@ else
     cd /workspace/ComfyUI/custom_nodes
     echo "Installing custom node requirements..." | tee -a /workspace/logs/comfyui.log
     find . -name "requirements.txt" -exec uv pip install --no-cache -r {} \; 2>&1 | tee -a /workspace/logs/comfyui.log
+
+    # TODO: copy /workspace/external_models.json to /workspace/ComfyUI/custom_nodes/ComfyUI_Qwen3-VL-Instruct/*
 fi
 
 # Create log file if it doesn't exist
