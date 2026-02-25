@@ -3,7 +3,7 @@
 # default environment variable
 
 export UPDATE_ON_START=${UPDATE_ON_START:-"false"}
-export MODELS_CONFIG_URL=${MODELS_CONFIG_URL:-"https://raw.githubusercontent.com/poomshift/comfyui-docker-new/refs/heads/main/models_config.json"}
+export MODELS_CONFIG_URL=${MODELS_CONFIG_URL:-""}
 export SKIP_MODEL_DOWNLOAD=${SKIP_MODEL_DOWNLOAD:-"false"}
 export FORCE_MODEL_DOWNLOAD=${FORCE_MODEL_DOWNLOAD:-"false"}
 export LOG_PATH=${LOG_PATH:-"/notebooks/backend.log"}
@@ -199,16 +199,18 @@ if [ ! -e "/workspace/ComfyUI/main.py" ]; then
     echo "Installing ComfyUI requirements..." | tee -a /workspace/logs/comfyui.log
     uv pip install --no-cache -r requirements.txt 2>&1 | tee -a /workspace/logs/comfyui.log
 
-    # Install SageAttention 2.2.0 from prebuilt wheel (no compilation needed)
-    echo "Installing SageAttention 2.2.0 from prebuilt wheel..." | tee -a /workspace/logs/comfyui.log
-    uv pip install https://huggingface.co/Kijai/PrecompiledWheels/resolve/main/sageattention-2.2.0-cp312-cp312-linux_x86_64.whl 2>&1 | tee -a /workspace/logs/comfyui.log
-    echo "SageAttention 2.2.0 installation complete" | tee -a /workspace/logs/comfyui.log
+    if [ "$USE_SAGE_ATTENTION" = "true" ]; then
+        # Install SageAttention 2.2.0 from prebuilt wheel (no compilation needed)
+        echo "Installing SageAttention 2.2.0 from prebuilt wheel..." | tee -a /workspace/logs/comfyui.log
+        uv pip install https://huggingface.co/Kijai/PrecompiledWheels/resolve/main/sageattention-2.2.0-cp312-cp312-linux_x86_64.whl 2>&1 | tee -a /workspace/logs/comfyui.log
+        echo "SageAttention 2.2.0 installation complete" | tee -a /workspace/logs/comfyui.log
 
-    # Install SageAttention 3 from prebuilt wheel (no compilation needed)
-    echo "Installing SageAttention 3 from prebuilt wheel..." | tee -a /workspace/logs/comfyui.log
-    uv pip install https://huggingface.co/vjump21848/sageattention-pre-compiled-wheel/resolve/main/sageattn3-1.0.0%2Bcu128-cp312-cp312-linux_x86_64.whl 2>&1 | tee -a /workspace/logs/comfyui.log
-    echo "SageAttention 3 installation complete" | tee -a /workspace/logs/comfyui.log
-    
+        # Install SageAttention 3 from prebuilt wheel (no compilation needed)
+        echo "Installing SageAttention 3 from prebuilt wheel..." | tee -a /workspace/logs/comfyui.log
+        uv pip install https://huggingface.co/vjump21848/sageattention-pre-compiled-wheel/resolve/main/sageattn3-1.0.0%2Bcu128-cp312-cp312-linux_x86_64.whl 2>&1 | tee -a /workspace/logs/comfyui.log
+        echo "SageAttention 3 installation complete" | tee -a /workspace/logs/comfyui.log
+    fi
+
     cd /workspace/ComfyUI
 
     # Create model directories
@@ -226,32 +228,37 @@ if [ ! -e "/workspace/ComfyUI/main.py" ]; then
     #git clone --depth=1 https://github.com/ltdrdata/ComfyUI-Impact-Pack.git 2>&1 | tee -a /workspace/logs/comfyui.log && du -sh ComfyUI-Impact-Pack | tee -a /workspace/logs/comfyui.log
     git clone --depth=1 https://github.com/cubiq/ComfyUI_essentials.git 2>&1 | tee -a /workspace/logs/comfyui.log && du -sh ComfyUI_essentials | tee -a /workspace/logs/comfyui.log
     #git clone --depth=1 https://github.com/ltdrdata/ComfyUI-Inspire-Pack.git 2>&1 | tee -a /workspace/logs/comfyui.log && du -sh ComfyUI-Inspire-Pack | tee -a /workspace/logs/comfyui.log
-    git clone --depth=1 https://github.com/Fannovel16/comfyui_controlnet_aux.git 2>&1 | tee -a /workspace/logs/comfyui.log && du -sh comfyui_controlnet_aux | tee -a /workspace/logs/comfyui.log
+    #git clone --depth=1 https://github.com/Fannovel16/comfyui_controlnet_aux.git 2>&1 | tee -a /workspace/logs/comfyui.log && du -sh comfyui_controlnet_aux | tee -a /workspace/logs/comfyui.log
     #git clone --depth=1 https://github.com/nicofdga/DZ-FaceDetailer.git 2>&1 | tee -a /workspace/logs/comfyui.log && du -sh DZ-FaceDetailer | tee -a /workspace/logs/comfyui.log
-    git clone --depth=1 https://github.com/cubiq/ComfyUI_IPAdapter_plus.git 2>&1 | tee -a /workspace/logs/comfyui.log && du -sh ComfyUI_IPAdapter_plus | tee -a /workspace/logs/comfyui.log
-    git clone --depth=1 https://github.com/ssitu/ComfyUI_UltimateSDUpscale.git --recursive 2>&1 | tee -a /workspace/logs/comfyui.log && du -sh ComfyUI_UltimateSDUpscale | tee -a /workspace/logs/comfyui.log
+    #git clone --depth=1 https://github.com/cubiq/ComfyUI_IPAdapter_plus.git 2>&1 | tee -a /workspace/logs/comfyui.log && du -sh ComfyUI_IPAdapter_plus | tee -a /workspace/logs/comfyui.log
+    #git clone --depth=1 https://github.com/ssitu/ComfyUI_UltimateSDUpscale.git --recursive 2>&1 | tee -a /workspace/logs/comfyui.log && du -sh ComfyUI_UltimateSDUpscale | tee -a /workspace/logs/comfyui.log
     git clone --depth=1 https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite.git 2>&1 | tee -a /workspace/logs/comfyui.log && du -sh ComfyUI-VideoHelperSuite | tee -a /workspace/logs/comfyui.log
-    git clone --depth=1 https://github.com/Acly/comfyui-inpaint-nodes.git 2>&1 | tee -a /workspace/logs/comfyui.log && du -sh comfyui-inpaint-nodes | tee -a /workspace/logs/comfyui.log
+    #git clone --depth=1 https://github.com/Acly/comfyui-inpaint-nodes.git 2>&1 | tee -a /workspace/logs/comfyui.log && du -sh comfyui-inpaint-nodes | tee -a /workspace/logs/comfyui.log
     git clone --depth=1 https://github.com/kijai/ComfyUI-KJNodes.git 2>&1 | tee -a /workspace/logs/comfyui.log && du -sh ComfyUI-KJNodes | tee -a /workspace/logs/comfyui.log
-    git clone --depth=1 https://github.com/city96/ComfyUI-GGUF.git 2>&1 | tee -a /workspace/logs/comfyui.log && du -sh ComfyUI-GGUF | tee -a /workspace/logs/comfyui.log
-    git clone --depth=1 https://github.com/rgthree/rgthree-comfy.git 2>&1 | tee -a /workspace/logs/comfyui.log && du -sh rgthree-comfy | tee -a /workspace/logs/comfyui.log
+    #git clone --depth=1 https://github.com/city96/ComfyUI-GGUF.git 2>&1 | tee -a /workspace/logs/comfyui.log && du -sh ComfyUI-GGUF | tee -a /workspace/logs/comfyui.log
+    #git clone --depth=1 https://github.com/rgthree/rgthree-comfy.git 2>&1 | tee -a /workspace/logs/comfyui.log && du -sh rgthree-comfy | tee -a /workspace/logs/comfyui.log
     #git clone --depth=1 https://github.com/AlekPet/ComfyUI_Custom_Nodes_AlekPet.git 2>&1 | tee -a /workspace/logs/comfyui.log && du -sh ComfyUI_Custom_Nodes_AlekPet | tee -a /workspace/logs/comfyui.log
-    git clone --depth=1 https://github.com/justUmen/Bjornulf_custom_nodes.git 2>&1 | tee -a /workspace/logs/comfyui.log && du -sh Bjornulf_custom_nodes | tee -a /workspace/logs/comfyui.log
-    git clone --depth=1 https://github.com/pythongosssss/ComfyUI-Custom-Scripts.git 2>&1 | tee -a /workspace/logs/comfyui.log && du -sh ComfyUI-Custom-Scripts | tee -a /workspace/logs/comfyui.log
-    git clone --depth=1 https://github.com/Fannovel16/ComfyUI-Frame-Interpolation.git 2>&1 | tee -a /workspace/logs/comfyui.log && du -sh ComfyUI-Frame-Interpolation | tee -a /workspace/logs/comfyui.log
-    git clone --depth=1 https://github.com/numz/ComfyUI-SeedVR2_VideoUpscaler.git 2>&1 | tee -a /workspace/logs/comfyui.log && du -sh ComfyUI-SeedVR2_VideoUpscaler | tee -a /workspace/logs/comfyui.log
+    #git clone --depth=1 https://github.com/justUmen/Bjornulf_custom_nodes.git 2>&1 | tee -a /workspace/logs/comfyui.log && du -sh Bjornulf_custom_nodes | tee -a /workspace/logs/comfyui.log
+    #git clone --depth=1 https://github.com/pythongosssss/ComfyUI-Custom-Scripts.git 2>&1 | tee -a /workspace/logs/comfyui.log && du -sh ComfyUI-Custom-Scripts | tee -a /workspace/logs/comfyui.log
+    #git clone --depth=1 https://github.com/Fannovel16/ComfyUI-Frame-Interpolation.git 2>&1 | tee -a /workspace/logs/comfyui.log && du -sh ComfyUI-Frame-Interpolation | tee -a /workspace/logs/comfyui.log
+    #git clone --depth=1 https://github.com/numz/ComfyUI-SeedVR2_VideoUpscaler.git 2>&1 | tee -a /workspace/logs/comfyui.log && du -sh ComfyUI-SeedVR2_VideoUpscaler | tee -a /workspace/logs/comfyui.log
     #git clone --depth=1 https://github.com/ShmuelRonen/ComfyUI-VideoUpscale_WithModel.git 2>&1 | tee -a /workspace/logs/comfyui.log && du -sh ComfyUI-VideoUpscale_WithModel | tee -a /workspace/logs/comfyui.log
     git clone --depth=1 https://github.com/kijai/ComfyUI-WanVideoWrapper.git 2>&1 | tee -a /workspace/logs/comfyui.log && du -sh ComfyUI-WanVideoWrapper | tee -a /workspace/logs/comfyui.log
-    git clone --depth=1 https://github.com/chflame163/ComfyUI_LayerStyle.git 2>&1 | tee -a /workspace/logs/comfyui.log && du -sh ComfyUI_LayerStyle | tee -a /workspace/logs/comfyui.log
-    git clone --depth=1 https://github.com/kijai/ComfyUI-MelBandRoFormer.git 2>&1 | tee -a /workspace/logs/comfyui.log && du -sh ComfyUI-MelBandRoFormer | tee -a /workspace/logs/comfyui.log
-    git clone --depth=1 https://github.com/kijai/ComfyUI-segment-anything-2.git  2>&1 | tee -a /workspace/logs/comfyui.log && du -sh ComfyUI-segment-anything-2 | tee -a /workspace/logs/comfyui.log
-    git clone --depth=1 https://github.com/kijai/ComfyUI-WanAnimatePreprocess.git  2>&1 | tee -a /workspace/logs/comfyui.log && du -sh ComfyUI-WanAnimatePreprocess | tee -a /workspace/logs/comfyui.log
-    git clone --depth=1 https://github.com/theUpsider/ComfyUI-Logic.git  2>&1 | tee -a /workspace/logs/comfyui.log && du -sh ComfyUI-Logic | tee -a /workspace/logs/comfyui.log
-    git clone --depth=1 https://github.com/ltdrdata/was-node-suite-comfyui.git  2>&1 | tee -a /workspace/logs/comfyui.log && du -sh was-node-suite-comfyui | tee -a /workspace/logs/comfyui.log
-    git clone --depth=1 https://github.com/kijai/ComfyUI-SCAIL-Pose.git  2>&1 | tee -a /workspace/logs/comfyui.log && du -sh ComfyUI-SCAIL-Pose | tee -a /workspace/logs/comfyui.log
-    git clone --depth=1 https://github.com/ClownsharkBatwing/RES4LYF.git  2>&1 | tee -a /workspace/logs/comfyui.log && du -sh RES4LYF | tee -a /workspace/logs/comfyui.log
-    git clone --depth=1 https://github.com/Lightricks/ComfyUI-LTXVideo.git 2>&1 | tee -a /workspace/logs/comfyui.log && du -sh ComfyUI-LTXVideo | tee -a /workspace/logs/comfyui.log
+    #git clone --depth=1 https://github.com/chflame163/ComfyUI_LayerStyle.git 2>&1 | tee -a /workspace/logs/comfyui.log && du -sh ComfyUI_LayerStyle | tee -a /workspace/logs/comfyui.log
+    #git clone --depth=1 https://github.com/kijai/ComfyUI-MelBandRoFormer.git 2>&1 | tee -a /workspace/logs/comfyui.log && du -sh ComfyUI-MelBandRoFormer | tee -a /workspace/logs/comfyui.log
+    #git clone --depth=1 https://github.com/kijai/ComfyUI-segment-anything-2.git  2>&1 | tee -a /workspace/logs/comfyui.log && du -sh ComfyUI-segment-anything-2 | tee -a /workspace/logs/comfyui.log
+    #git clone --depth=1 https://github.com/kijai/ComfyUI-WanAnimatePreprocess.git  2>&1 | tee -a /workspace/logs/comfyui.log && du -sh ComfyUI-WanAnimatePreprocess | tee -a /workspace/logs/comfyui.log
+    #git clone --depth=1 https://github.com/theUpsider/ComfyUI-Logic.git  2>&1 | tee -a /workspace/logs/comfyui.log && du -sh ComfyUI-Logic | tee -a /workspace/logs/comfyui.log
+    #git clone --depth=1 https://github.com/ltdrdata/was-node-suite-comfyui.git  2>&1 | tee -a /workspace/logs/comfyui.log && du -sh was-node-suite-comfyui | tee -a /workspace/logs/comfyui.log
+    #git clone --depth=1 https://github.com/kijai/ComfyUI-SCAIL-Pose.git  2>&1 | tee -a /workspace/logs/comfyui.log && du -sh ComfyUI-SCAIL-Pose | tee -a /workspace/logs/comfyui.log
+    #git clone --depth=1 https://github.com/ClownsharkBatwing/RES4LYF.git  2>&1 | tee -a /workspace/logs/comfyui.log && du -sh RES4LYF | tee -a /workspace/logs/comfyui.log
+    #git clone --depth=1 https://github.com/Lightricks/ComfyUI-LTXVideo.git 2>&1 | tee -a /workspace/logs/comfyui.log && du -sh ComfyUI-LTXVideo | tee -a /workspace/logs/comfyui.log
     
+    git clone --depth=1 https://github.com/vslinx/ComfyUI_Qwen3-VL-Instruct.git 2>&1 | tee -a /workspace/logs/comfyui.log && du -sh ComfyUI_Qwen3-VL-Instruct | tee -a /workspace/logs/comfyui.log
+    git clone --depth=1 https://github.com/Smyshnikof/ComfyUI-PresetDownloadManager.git 2>&1 | tee -a /workspace/logs/comfyui.log && du -sh ComfyUI-PresetDownloadManager | tee -a /workspace/logs/comfyui.log
+
+
+
     echo "Total size of custom nodes:" | tee -a /workspace/logs/comfyui.log && du -sh . | tee -a /workspace/logs/comfyui.log
 
     # Install custom nodes requirements
@@ -279,15 +286,18 @@ else
     echo "Installing ComfyUI requirements..." | tee -a /workspace/logs/comfyui.log
     uv pip install --no-cache -r requirements.txt 2>&1 | tee -a /workspace/logs/comfyui.log
 
-    # Install SageAttention 2.2.0 from prebuilt wheel (no compilation needed)
-    echo "Installing SageAttention 2.2.0 from prebuilt wheel..." | tee -a /workspace/logs/comfyui.log
-    uv pip install https://huggingface.co/Kijai/PrecompiledWheels/resolve/main/sageattention-2.2.0-cp312-cp312-linux_x86_64.whl 2>&1 | tee -a /workspace/logs/comfyui.log
-    echo "SageAttention 2.2.0 installation complete" | tee -a /workspace/logs/comfyui.log
+    if [ "$USE_SAGE_ATTENTION" = "true" ]; then
 
-    # Install SageAttention 3 from prebuilt wheel (no compilation needed)
-    echo "Installing SageAttention 3 from prebuilt wheel..." | tee -a /workspace/logs/comfyui.log
-    uv pip install https://huggingface.co/vjump21848/sageattention-pre-compiled-wheel/resolve/main/sageattn3-1.0.0%2Bcu128-cp312-cp312-linux_x86_64.whl 2>&1 | tee -a /workspace/logs/comfyui.log
-    echo "SageAttention 3 installation complete" | tee -a /workspace/logs/comfyui.log
+        # Install SageAttention 2.2.0 from prebuilt wheel (no compilation needed)
+        echo "Installing SageAttention 2.2.0 from prebuilt wheel..." | tee -a /workspace/logs/comfyui.log
+        uv pip install https://huggingface.co/Kijai/PrecompiledWheels/resolve/main/sageattention-2.2.0-cp312-cp312-linux_x86_64.whl 2>&1 | tee -a /workspace/logs/comfyui.log
+        echo "SageAttention 2.2.0 installation complete" | tee -a /workspace/logs/comfyui.log
+
+        # Install SageAttention 3 from prebuilt wheel (no compilation needed)
+        echo "Installing SageAttention 3 from prebuilt wheel..." | tee -a /workspace/logs/comfyui.log
+        uv pip install https://huggingface.co/vjump21848/sageattention-pre-compiled-wheel/resolve/main/sageattn3-1.0.0%2Bcu128-cp312-cp312-linux_x86_64.whl 2>&1 | tee -a /workspace/logs/comfyui.log
+        echo "SageAttention 3 installation complete" | tee -a /workspace/logs/comfyui.log
+    fi
 
     cd /workspace/ComfyUI
 
