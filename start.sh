@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # default environment variable
-
 export UPDATE_ON_START=${UPDATE_ON_START:-"false"}
 export SKIP_MODEL_DOWNLOAD=${SKIP_MODEL_DOWNLOAD:-"false"}
 export FORCE_MODEL_DOWNLOAD=${FORCE_MODEL_DOWNLOAD:-"false"}
@@ -158,6 +157,9 @@ if [ ! -f "$CONFIG_FILE" ]; then
                 "style_models": []
             }' >"$CONFIG_FILE"
         fi
+    elif [ -f "/notebooks/models_config.json" ]; then
+        echo "Copying models_config.json from /notebooks..." | tee -a /workspace/logs/comfyui.log
+        cp "/notebooks/models_config.json" "$CONFIG_FILE"
     else
         echo "No MODELS_CONFIG_URL provided. Creating default configuration..." | tee -a /workspace/logs/comfyui.log
         echo '{
@@ -257,7 +259,7 @@ if [ ! -e "/workspace/ComfyUI/main.py" ]; then
     
     git clone --depth=1 https://github.com/Smyshnikof/ComfyUI-PresetDownloadManager.git 2>&1 | tee -a /workspace/logs/comfyui.log && du -sh ComfyUI-PresetDownloadManager | tee -a /workspace/logs/comfyui.log
     git clone --depth=1 https://github.com/vslinx/ComfyUI_Qwen3-VL-Instruct.git 2>&1 | tee -a /workspace/logs/comfyui.log && du -sh ComfyUI_Qwen3-VL-Instruct | tee -a /workspace/logs/comfyui.log
-    cp -f /workspace/external_models.json ./ComfyUI_Qwen3-VL-Instruct/external_models.json
+    cp -f /notebooks/external_models.json ./ComfyUI_Qwen3-VL-Instruct/external_models.json
 
     echo "Total size of custom nodes:" | tee -a /workspace/logs/comfyui.log && du -sh . | tee -a /workspace/logs/comfyui.log
 
