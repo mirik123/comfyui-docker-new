@@ -3,7 +3,6 @@
 # default environment variable
 
 export UPDATE_ON_START=${UPDATE_ON_START:-"false"}
-export MODELS_CONFIG_URL=${MODELS_CONFIG_URL:-""}
 export SKIP_MODEL_DOWNLOAD=${SKIP_MODEL_DOWNLOAD:-"false"}
 export FORCE_MODEL_DOWNLOAD=${FORCE_MODEL_DOWNLOAD:-"false"}
 export LOG_PATH=${LOG_PATH:-"/notebooks/backend.log"}
@@ -258,7 +257,7 @@ if [ ! -e "/workspace/ComfyUI/main.py" ]; then
     
     git clone --depth=1 https://github.com/Smyshnikof/ComfyUI-PresetDownloadManager.git 2>&1 | tee -a /workspace/logs/comfyui.log && du -sh ComfyUI-PresetDownloadManager | tee -a /workspace/logs/comfyui.log
     git clone --depth=1 https://github.com/vslinx/ComfyUI_Qwen3-VL-Instruct.git 2>&1 | tee -a /workspace/logs/comfyui.log && du -sh ComfyUI_Qwen3-VL-Instruct | tee -a /workspace/logs/comfyui.log
-    cp /workspace/external_models.json ./ComfyUI_Qwen3-VL-Instruct/external_models.json
+    cp -f /workspace/external_models.json ./ComfyUI_Qwen3-VL-Instruct/external_models.json
 
     echo "Total size of custom nodes:" | tee -a /workspace/logs/comfyui.log && du -sh . | tee -a /workspace/logs/comfyui.log
 
@@ -329,7 +328,7 @@ fi
 # Check if models from config exist
 if [ -n "$CONFIG_FILE" ] && [ -f "$CONFIG_FILE" ]; then
     echo "Checking for missing models..." | tee -a /workspace/logs/comfyui.log
-    if python /utils/getInstalledModels.py --check-missing "$CONFIG_FILE"; then
+    if python /notebooks/utils/getInstalledModels.py --check-missing "$CONFIG_FILE"; then
         echo "All required models present..." | tee -a /workspace/logs/comfyui.log
     elif [ "$SKIP_MODEL_DOWNLOAD" != "true" ]; then
         echo "Some required models are missing. Downloading models..." | tee -a /workspace/logs/comfyui.log

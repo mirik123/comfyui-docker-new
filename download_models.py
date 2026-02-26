@@ -207,7 +207,7 @@ async def track_download_progress(
 async def main():
     """Main async function to download models concurrently"""
     # Environment variables
-    config_path = os.getenv("MODELS_CONFIG_URL", "/workspace/models_config.json")
+    config_path = os.getenv("MODELS_CONFIG_URL") or "/workspace/models_config.json"
     skip_download = os.getenv("SKIP_MODEL_DOWNLOAD", "").lower() == "true"
     force_download = os.getenv("FORCE_MODEL_DOWNLOAD", "").lower() == "true"
 
