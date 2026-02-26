@@ -65,7 +65,7 @@ COPY ./static/ ./static/
 COPY ./workers/ ./workers/
 COPY ./utils/ ./utils/
 COPY ./templates/ ./templates/
-COPY models_config.json /workspace
+COPY model*.json /workspace
 COPY external_models.json /workspace
 RUN chmod +x *.sh
 

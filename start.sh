@@ -89,6 +89,10 @@ cd /
 # Install uv for faster package installation
 install_uv
 
+echo "Installing PyTorch dependencies..." | tee -a /workspace/logs/comfyui.log
+uv pip install --no-cache torch==2.9.1 torchvision==0.24.1 torchaudio==2.9.1 --extra-index-url https://download.pytorch.org/whl/cu128 2>&1 | tee -a /workspace/logs/comfyui.log
+uv pip install --no-cache "huggingface_hub>=0.24.0" "transformers>=4.41.0" 2>&1 | tee -a /workspace/logs/comfyui.log
+
 # Function to check internet connectivity
 check_internet() {
     local max_attempts=5
@@ -194,8 +198,6 @@ if [ ! -e "/workspace/ComfyUI/main.py" ]; then
 
     # Install dependencies
     cd /workspace/ComfyUI
-    echo "Installing PyTorch dependencies..." | tee -a /workspace/logs/comfyui.log
-    uv pip install --no-cache torch==2.9.1 torchvision==0.24.1 torchaudio==2.9.1 --extra-index-url https://download.pytorch.org/whl/cu128 2>&1 | tee -a /workspace/logs/comfyui.log
     echo "Installing ComfyUI requirements..." | tee -a /workspace/logs/comfyui.log
     uv pip install --no-cache -r requirements.txt 2>&1 | tee -a /workspace/logs/comfyui.log
 
@@ -254,10 +256,9 @@ if [ ! -e "/workspace/ComfyUI/main.py" ]; then
     #git clone --depth=1 https://github.com/ClownsharkBatwing/RES4LYF.git  2>&1 | tee -a /workspace/logs/comfyui.log && du -sh RES4LYF | tee -a /workspace/logs/comfyui.log
     #git clone --depth=1 https://github.com/Lightricks/ComfyUI-LTXVideo.git 2>&1 | tee -a /workspace/logs/comfyui.log && du -sh ComfyUI-LTXVideo | tee -a /workspace/logs/comfyui.log
     
-    git clone --depth=1 https://github.com/vslinx/ComfyUI_Qwen3-VL-Instruct.git 2>&1 | tee -a /workspace/logs/comfyui.log && du -sh ComfyUI_Qwen3-VL-Instruct | tee -a /workspace/logs/comfyui.log
     git clone --depth=1 https://github.com/Smyshnikof/ComfyUI-PresetDownloadManager.git 2>&1 | tee -a /workspace/logs/comfyui.log && du -sh ComfyUI-PresetDownloadManager | tee -a /workspace/logs/comfyui.log
-
-
+    git clone --depth=1 https://github.com/vslinx/ComfyUI_Qwen3-VL-Instruct.git 2>&1 | tee -a /workspace/logs/comfyui.log && du -sh ComfyUI_Qwen3-VL-Instruct | tee -a /workspace/logs/comfyui.log
+    cp /workspace/external_models.json ./ComfyUI_Qwen3-VL-Instruct/external_models.json
 
     echo "Total size of custom nodes:" | tee -a /workspace/logs/comfyui.log && du -sh . | tee -a /workspace/logs/comfyui.log
 
@@ -281,8 +282,6 @@ else
     
     # Install Dependencies
     cd /workspace/ComfyUI
-    echo "Installing PyTorch dependencies..." | tee -a /workspace/logs/comfyui.log
-    uv pip install --no-cache torch==2.9.1 torchvision==0.24.1 torchaudio==2.9.1 --extra-index-url https://download.pytorch.org/whl/cu128 2>&1 | tee -a /workspace/logs/comfyui.log
     echo "Installing ComfyUI requirements..." | tee -a /workspace/logs/comfyui.log
     uv pip install --no-cache -r requirements.txt 2>&1 | tee -a /workspace/logs/comfyui.log
 
@@ -305,8 +304,6 @@ else
     cd /workspace/ComfyUI/custom_nodes
     echo "Installing custom node requirements..." | tee -a /workspace/logs/comfyui.log
     find . -name "requirements.txt" -exec uv pip install --no-cache -r {} \; 2>&1 | tee -a /workspace/logs/comfyui.log
-
-    # TODO: copy /workspace/external_models.json to /workspace/ComfyUI/custom_nodes/ComfyUI_Qwen3-VL-Instruct/*
 fi
 
 # Create log file if it doesn't exist
