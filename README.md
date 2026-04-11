@@ -2,117 +2,56 @@
 
 A streamlined and feature-rich RunPod template for ComfyUI with an enhanced user interface, model management, and custom nodes.
 
+### Ready for ComfyUI NSFW workflows:
+- Wan2.2 Remix I2V v2.1 SVI2Pro Fully Automatic Reverse Long Video Workflow
+- Wan2.2-Remix-I2V
 
-## 🌟 Features
+### For importing custom models add env var:
+MODELS_CONFIG_URL=https://raw.githubusercontent.com/poomshift/comfyui-docker-new/refs/heads/main/models_config.json
 
-- **Modern, Clean UI** - Intuitive interface with tabbed sections and responsive design
-- **Real-time Log Viewer** - Docker-style formatted logs with auto-scroll functionality
-- **Model Management** - Download models from Civitai, Hugging Face, and Google Drive
-- **Pre-installed Custom Nodes** - Extensive collection of the most popular custom nodes
-- **One-click Access** - Direct links to ComfyUI and JupyterLab interfaces
-- **Output Download** - Quickly download all your generated images in one click
+### Included models:
+- vae
+   - https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors
+- unet
+   - https://huggingface.co/FX-FeiHou/wan2.2-Remix/resolve/main/NSFW/Wan2.2_Remix_NSFW_i2v_14b_high_lighting_fp8_e4m3fn_v2.1.safetensors
+   - https://huggingface.co/FX-FeiHou/wan2.2-Remix/resolve/main/NSFW/Wan2.2_Remix_NSFW_i2v_14b_low_lighting_fp8_e4m3fn_v2.1.safetensors
+   - https://huggingface.co/FX-FeiHou/wan2.2-Remix/resolve/main/NSFW/Wan2.2_Remix_NSFW_i2v_14b_high_lighting_v2.0.safetensors
+   - https://huggingface.co/FX-FeiHou/wan2.2-Remix/resolve/main/NSFW/Wan2.2_Remix_NSFW_i2v_14b_low_lighting_v2.0.safetensors
+- text_encoders
+   - https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors
+   - https://huggingface.co/NSFW-API/NSFW-Wan-UMT5-XXL/resolve/main/nsfw_wan_umt5-xxl_fp8_scaled.safetensors
+- loras
+   - https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/LoRAs/Stable-Video-Infinity/v2.0/SVI_v2_PRO_Wan2.2-I2V-A14B_HIGH_lora_rank_128_fp16.safetensors
+   - https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/LoRAs/Stable-Video-Infinity/v2.0/SVI_v2_PRO_Wan2.2-I2V-A14B_LOW_lora_rank_128_fp16.safetensors
 
-## 🚀 Getting Started
-
-### Starting Your Pod
-
-1. Select this template from the RunPod template library
-2. Choose your desired GPU type (recommended at least 24GB VRAM for optimal performance)
-3. Start your pod
-4. Access the Dashboard at port 8189 from your pod's Connect tab
-
-### Interface Overview
-
-The interface consists of several key sections:
-
-- **Top Controls** - Access links to ComfyUI, JupyterLab, and output downloads
-- **Pre-installed Section** - View all custom nodes and models included in the template
-- **Logs Section** - Monitor the ComfyUI logs in real-time with auto-scroll
-- **Model Downloaders** - Download additional models from popular repositories
-
-## 💾 Model Management
-
-### Available Model Categories
-
-- Checkpoints
-- VAE
-- LoRA
-- UNet
-- Diffusion Models
-- Text Encoders
-- Upscale Models
-- CLIP
-- ControlNet
-- CLIP Vision
-- IPAdapter
-- Style Models
-
-### Downloading Models
-
-#### From Civitai
-
-1. Navigate to the Civitai downloader tab
-2. Enter the model URL from Civitai
-3. Add your Civitai API key (optional)
-4. Select the appropriate model type
-5. Click "Download Model"
-
-#### From Hugging Face
-
-1. Navigate to the Hugging Face downloader tab
-2. Enter the direct file URL from Hugging Face
-3. Select the appropriate model type
-4. Click "Download Model"
-
-#### From Google Drive
-
-1. Navigate to the Google Drive downloader tab
-2. Enter the Google Drive URL or file ID
-3. Select the appropriate model type
-4. Optionally specify a custom filename
-5. Click "Download Model"
-
-## 🧩 Custom Nodes
-
-This template comes with the following custom nodes pre-installed:
-
+### Included custom nodes:
 - ComfyUI-Manager
-- ComfyUI-Impact-Pack
 - ComfyUI_essentials
-- ComfyUI-Inspire-Pack
-- comfyui_controlnet_aux
-- DZ-FaceDetailer
-- ComfyUI_IPAdapter_plus
-- ComfyUI_UltimateSDUpscale
 - ComfyUI-VideoHelperSuite
-- comfyui-inpaint-nodes
 - ComfyUI-KJNodes
-- ComfyUI-GGUF
-- rgthree-comfy
-- ComfyUI_Custom_Nodes_AlekPet
-- ComfyUI-Gemini-API
-- ComfyUI-RED-UNO
-- Bjornulf_custom_nodes
-- ComfyUI-Custom-Scripts
+- ComfyUI-WanVideoWrapper
+- ComfyUI-PresetDownloadManager
+- ComfyUI_Qwen3-VL-Instruct
+
+### Qwen3-VL-Instruct Abliterated
+https://github.com/IuvenisSapiens/ComfyUI_Qwen3-VL-Instruct/pull/69
+   - huihui-ai/Huihui-Qwen3-VL-8B-Thinking-abliterated
+   - huihui-ai/Huihui-Qwen3-VL-8B-Instruct-abliterated
 
 
-### Backing Up Your Work
+### 🙏 Acknowledgements
 
-To back up your work:
-1. Use the "Download Outputs" button to get generated images
-2. For workflows, save them through the ComfyUI interface
-
-
-## 🙏 Acknowledgements
-
+- The template is based on https://github.com/poomshift/comfyui-docker-new
 - [ComfyUI](https://github.com/comfyanonymous/ComfyUI) by comfyanonymous
 - All custom node developers for their valuable contributions
 - RunPod.io for the GPU cloud infrastructure
-
-For more information, visit [PromptAlchemist on Facebook](https://www.facebook.com/PromptAlchemist). 
+- For more information, visit [PromptAlchemist on Facebook](https://www.facebook.com/PromptAlchemist). 
 
 ### Building docker container
 - `sed -i -e 's/\r$//' start.sh`
 - `docker build --no-cache -t runpod-comfyui-wan .`
 - `docker tag runpod-comfyui-wan repository/runpod-comfyui-wan`
 - `docker push repository/runpod-comfyui-wan`
+
+### Runpod template
+https://runpod.io/gsc?template=4f33nox3uc
