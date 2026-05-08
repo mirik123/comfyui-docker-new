@@ -5,7 +5,7 @@ import aiohttp
 from pathlib import Path
 import logging
 import sys
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 
 # Prevent duplicate logging
 logging.getLogger().handlers = []
@@ -87,7 +87,7 @@ async def download_file(
             return False
 
 
-async def get_config_async(config_path: str) -> Dict[str, Any]:
+async def get_config_async(config_path: str) -> Optional[Dict[str, Any]]:
     """Load configuration from file or URL (async)"""
     try:
         # Check if it's a URL

@@ -231,7 +231,7 @@ if [ ! -e "/workspace/ComfyUI/main.py" ]; then
     #git clone --depth=1 https://github.com/ltdrdata/ComfyUI-Impact-Pack.git 2>&1 | tee -a /workspace/logs/comfyui.log && du -sh ComfyUI-Impact-Pack | tee -a /workspace/logs/comfyui.log
     git clone --depth=1 https://github.com/cubiq/ComfyUI_essentials.git 2>&1 | tee -a /workspace/logs/comfyui.log && du -sh ComfyUI_essentials | tee -a /workspace/logs/comfyui.log
     #git clone --depth=1 https://github.com/ltdrdata/ComfyUI-Inspire-Pack.git 2>&1 | tee -a /workspace/logs/comfyui.log && du -sh ComfyUI-Inspire-Pack | tee -a /workspace/logs/comfyui.log
-    #git clone --depth=1 https://github.com/Fannovel16/comfyui_controlnet_aux.git 2>&1 | tee -a /workspace/logs/comfyui.log && du -sh comfyui_controlnet_aux | tee -a /workspace/logs/comfyui.log
+    git clone --depth=1 https://github.com/Fannovel16/comfyui_controlnet_aux.git 2>&1 | tee -a /workspace/logs/comfyui.log && du -sh comfyui_controlnet_aux | tee -a /workspace/logs/comfyui.log
     #git clone --depth=1 https://github.com/nicofdga/DZ-FaceDetailer.git 2>&1 | tee -a /workspace/logs/comfyui.log && du -sh DZ-FaceDetailer | tee -a /workspace/logs/comfyui.log
     #git clone --depth=1 https://github.com/cubiq/ComfyUI_IPAdapter_plus.git 2>&1 | tee -a /workspace/logs/comfyui.log && du -sh ComfyUI_IPAdapter_plus | tee -a /workspace/logs/comfyui.log
     #git clone --depth=1 https://github.com/ssitu/ComfyUI_UltimateSDUpscale.git --recursive 2>&1 | tee -a /workspace/logs/comfyui.log && du -sh ComfyUI_UltimateSDUpscale | tee -a /workspace/logs/comfyui.log
@@ -253,8 +253,8 @@ if [ ! -e "/workspace/ComfyUI/main.py" ]; then
     #git clone --depth=1 https://github.com/kijai/ComfyUI-WanAnimatePreprocess.git  2>&1 | tee -a /workspace/logs/comfyui.log && du -sh ComfyUI-WanAnimatePreprocess | tee -a /workspace/logs/comfyui.log
     #git clone --depth=1 https://github.com/theUpsider/ComfyUI-Logic.git  2>&1 | tee -a /workspace/logs/comfyui.log && du -sh ComfyUI-Logic | tee -a /workspace/logs/comfyui.log
     #git clone --depth=1 https://github.com/ltdrdata/was-node-suite-comfyui.git  2>&1 | tee -a /workspace/logs/comfyui.log && du -sh was-node-suite-comfyui | tee -a /workspace/logs/comfyui.log
-    #git clone --depth=1 https://github.com/kijai/ComfyUI-SCAIL-Pose.git  2>&1 | tee -a /workspace/logs/comfyui.log && du -sh ComfyUI-SCAIL-Pose | tee -a /workspace/logs/comfyui.log
-    #git clone --depth=1 https://github.com/ClownsharkBatwing/RES4LYF.git  2>&1 | tee -a /workspace/logs/comfyui.log && du -sh RES4LYF | tee -a /workspace/logs/comfyui.log
+    git clone --depth=1 https://github.com/pydn/ComfyUI-to-Python-Extension.git  2>&1 | tee -a /workspace/logs/comfyui.log && du -sh ComfyUI-to-Python-Extension | tee -a /workspace/logs/comfyui.log
+    git clone --depth=1 https://github.com/crystian/ComfyUI-Crystools.git  2>&1 | tee -a /workspace/logs/comfyui.log && du -sh ComfyUI-Crystools | tee -a /workspace/logs/comfyui.log
     #git clone --depth=1 https://github.com/Lightricks/ComfyUI-LTXVideo.git 2>&1 | tee -a /workspace/logs/comfyui.log && du -sh ComfyUI-LTXVideo | tee -a /workspace/logs/comfyui.log
     
     git clone --depth=1 https://github.com/Smyshnikof/ComfyUI-PresetDownloadManager.git 2>&1 | tee -a /workspace/logs/comfyui.log && du -sh ComfyUI-PresetDownloadManager | tee -a /workspace/logs/comfyui.log
